@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Integrate.h"
 #include <algorithm>
 #include <cmath>
@@ -187,7 +186,7 @@ void Integrate::block3()
 	// halve step size
 	// if more than 2 failed steps reset step size
 	// if more than 3 failed steps reduce order to 1
-	order_one();
+	update_o_h_fail();
 }
 
 void Integrate::block4()
@@ -202,7 +201,7 @@ void Integrate::block4()
 	f(x, y, yp);
 
 	// update the divided differences (phi) for the next step
-	update_dif();
+	update_differences();
 
 	// if k was reduced or k = 12 the end the starting phase
 	// if in the starting phase increase the order and double step size
@@ -217,7 +216,7 @@ void Integrate::block4()
 	}
 	else
 	{
-		update_h();
+		update_o_h_success();
 	}
 }
 
@@ -493,7 +492,7 @@ void Integrate::restore()
 	}
 }
 
-void Integrate::order_one()
+void Integrate::update_o_h_fail()
 {
 	double temp2 = 0.5;
 	if (ifail > 3)
@@ -538,7 +537,7 @@ void Integrate::correct()
 	}
 }
 
-void Integrate::update_dif()
+void Integrate::update_differences()
 {
 	for (size_t l = 0; l < neqn; l++)
 	{
@@ -554,7 +553,7 @@ void Integrate::update_dif()
 	}
 }
 
-void Integrate::update_h()
+void Integrate::update_o_h_success()
 {
 	if (knew == km1)
 	{

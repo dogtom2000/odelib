@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Ode.h"
 #include <algorithm>
 #include <cmath>
@@ -42,7 +41,7 @@ void Ode::step()
 	setup();
 
 	if ((iflag == 1) || (isgnold < 0) || (delsgn * del <= 0))
-	{ 
+	{
 		first_step();
 	}
 
@@ -65,7 +64,7 @@ void Ode::step()
 		integrate.take_step();
 
 		if (integrate.crash)
-		{			
+		{
 			end_tol();
 			return;
 		}
@@ -79,13 +78,13 @@ void Ode::step()
 	return;
 }
 
-// incomplete
 bool Ode::test_inputs()
 {
+	if (t == tout) { iflag = 6; return; }
+	if (relerr < 0 || abserr < 0) { iflag = 6; return; }
 	integrate.eps = std::max(relerr, abserr);
 	isgn = sgn(iflag);
 	iflag = std::abs(iflag);
-
 	return true;
 }
 
@@ -94,7 +93,6 @@ void Ode::setup()
 	del = tout - t;
 	absdel = std::abs(del);
 	tend = t + 10.0 * del;
-
 	if (isgn < 0) { tend = tout; }
 	nostep = 0;
 	kle4 = 0;
@@ -182,4 +180,3 @@ void Ode::end_tol()
 	t = integrate.x;
 	isgnold = 1;
 }
-

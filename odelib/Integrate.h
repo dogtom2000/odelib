@@ -105,12 +105,12 @@ public:
 
 	// block 3 functions
 	void restore();
-	void order_one();
+	void update_o_h_fail();
 
 	// block 4 functions
 	void correct();
-	void update_dif();
-	void update_h();
+	void update_differences();
+	void update_o_h_success();
 
 	// inline functions
 	template <class T>

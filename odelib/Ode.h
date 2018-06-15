@@ -5,9 +5,6 @@
 class Ode
 {
 public:
-	// constants
-	const unsigned int maxnum{ 100000 };
-
 	// constructor and destructor
 	Ode(void(*)(double, double*, double*), unsigned int, double*, double, double, double, double, double*);
 	~Ode();
@@ -23,6 +20,7 @@ public:
 
 	unsigned int neqn;
 	unsigned int nostep;
+	unsigned int maxnum{ 5000 };
 	unsigned int kle4;
 
 	double relerr;
@@ -52,11 +50,10 @@ public:
 	void increment();
 	void end_interp();
 	void end_extrap();
-	void end_work();	
+	void end_work();
 	void end_tol();
-	
+
 	// inline functions
 	template <class T>
 	int sgn(T a) { return (a > T(0)) - (a < T(0)); }
 };
-
